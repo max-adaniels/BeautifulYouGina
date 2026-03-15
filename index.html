@@ -64,9 +64,58 @@
 </div>
 
 <div class="bottom-actions">
-<a href="contact.vcf" target="_blank" class="primary-btn">
-<i class="fas fa-address-book"></i> Save Contact
+<!-- Save Contact / Preview Button -->
+<a href="contact.vcf" id="save-contact-btn" class="primary-btn">
+  <i class="fas fa-address-book"></i> Save Contact
 </a>
+
+<!-- Fallback Modal for non-Safari browsers -->
+<div id="contact-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:white; padding:20px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.2); z-index:1000;">
+  <h3>Beautiful You PE</h3>
+  <p>Phone: +27 41 581 0444</p>
+  <p>WhatsApp: +27 60 955 5518</p>
+  <p>Email: info@beautifulyou.co.za</p>
+  <p>Address: 141 Heugh Road, Walmer, Gqeberha</p>
+  <button id="copy-contact-btn" style="margin-top:10px; padding:10px 15px; border:none; border-radius:8px; background:#c9a9a6; color:white; cursor:pointer;">
+    Copy Contact Info
+  </button>
+  <button id="close-modal-btn" style="margin-top:10px; padding:10px 15px; border:none; border-radius:8px; background:#f0f2f5; color:#2c3e50; cursor:pointer;">
+    Close
+  </button>
+</div>
+
+<script>
+const saveBtn = document.getElementById('save-contact-btn');
+const modal = document.getElementById('contact-modal');
+const copyBtn = document.getElementById('copy-contact-btn');
+const closeBtn = document.getElementById('close-modal-btn');
+
+// Detect Safari
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+saveBtn.addEventListener('click', function(e) {
+  if (!isSafari) {
+    // prevent default download behavior for non-Safari
+    e.preventDefault();
+    modal.style.display = 'block';
+  }
+});
+
+copyBtn.addEventListener('click', function() {
+  const contactText = `Beautiful You PE
+Phone: +27 41 581 0444
+WhatsApp: +27 60 955 5518
+Email: info@beautifulyou.co.za
+Address: 141 Heugh Road, Walmer, Gqeberha`;
+  navigator.clipboard.writeText(contactText);
+  alert('Contact info copied!');
+});
+
+closeBtn.addEventListener('click', function() {
+  modal.style.display = 'none';
+});
+</script>
 <button onclick="shareCard()" class="secondary-btn"><i class="fas fa-share-nodes"></i> Share</button>
 </div>
 </div>
